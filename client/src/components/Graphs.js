@@ -25,8 +25,15 @@ function Graphs() {
   const handleSubmission = () => {
     setButton("Fetching");
     const fetchVariety = async () => {
-      const res = await fetch("http://localhost:8000/analysis/varietyCount/all/" + searchItem);
-      const data = await res.json();
+      const res = await fetch("http://localhost:8000/analysis/varietyCount/all/" + searchItem).then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      }).catch(err => {
+        console.log(err)
+      });
+      const data = res;
+      console.log(data);
       setPieData({
         labels: data.map((variety) => variety.website),
         datasets: [
@@ -56,8 +63,15 @@ function Graphs() {
       setButton("Fetched");
     };
     const fetchCosts = async () => {
-      const res = await fetch("http://localhost:8000/analysis/topCost/all/" + searchItem);
-      const data = await res.json();
+      const res = await fetch("http://localhost:8000/analysis/topCost/all/" + searchItem).then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      }).catch(err => {
+        console.log(err)
+      });
+      const data = res;
+      console.log(data);
       setLineData({
         labels: data.map((costs) => costs.website),
         datasets: [
